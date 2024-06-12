@@ -76,8 +76,9 @@ class Plyta:
     def setValut(self,valut):
         self.__valut = valut
         self.setColor()
-        return self.__valut
-
+        return self.__valut 
+    def __eq__(self, other):
+        return self.__valut == other.getValut()
 
 class Right:
    
@@ -317,20 +318,31 @@ def clear():
     pygame.display.update()
 
 def rad():
+    global fild
     number = 0
-    __exit =  True
+    __exit =  False
     for y in range(len(fild)):
         for x in range(len(fild[y])):
             if (number == 2):
-                return
+                break
 
-            if (fild[y][x].getValut() == 0):
-                __exit = False
-            
-                if (fild[y][x].getValut() == 0 and (random.randint(0, 4) == 2 or random.randint(0, 4) == 4)):
-                    fild[y][x] = Plyta(x, y)
-                    number += 1
-                    
+            if (fild[y][x].getValut() == 0 and (random.randint(0, 4) == 2 or random.randint(0, 4) == 4)):
+                fild[y][x] = Plyta(x, y)
+                number += 1
+        
+        
+    fild_past = copy.deepcopy(fild)
+    Up.Up()
+    if(fild_past.__eq__( fild)):
+        Right.right()
+        if(fild_past.__eq__( fild)):
+            Left.left() 
+            if(fild_past.__eq__( fild)):
+                Down.Down()  
+                if(fild_past.__eq__( fild)):
+                    __exit = True
+    
+    fild = copy.deepcopy(fild_past)
     return __exit
 # clear()
 # draw_plyt()
@@ -380,7 +392,6 @@ def saturations():
 # Up.Up()
 # Down.Down()
 fild= [[Plyta(x, y) for x in range(4)] for y in range(4)]
-fild_past = copy.deepcopy(fild)
 for row in fild:
     print("[", end=' ')
     for plyta_obj in row:
@@ -401,16 +412,15 @@ while True:
             
             if(flag):
                 keys = pygame.key.get_pressed()
-                if keys[pygame.K_LEFT]:
+                if keys[pygame.K_LEFT]and exits == False:
                     Left.left()
 
                     if (last != pygame.K_LEFT):
                         exits = rad()
                         last = pygame.K_LEFT
-                    pygame.time.delay(40)
                     draw_plyt()
 
-                if keys[pygame.K_RIGHT]:
+                if keys[pygame.K_RIGHT] and exits == False:
                     Right.right()
 
                     if (last != pygame.K_RIGHT):
@@ -418,7 +428,7 @@ while True:
                         last = pygame.K_RIGHT
                     draw_plyt()
 
-                if keys[pygame.K_UP]:
+                if keys[pygame.K_UP]and exits == False:
                     Up.Up()
 
                     if (last != pygame.K_UP):
@@ -426,7 +436,7 @@ while True:
                         last = pygame.K_UP
                     draw_plyt()
 
-                if keys[pygame.K_DOWN]:
+                if keys[pygame.K_DOWN]and exits == False:
                     Down.Down()
 
                     if (last != pygame.K_DOWN):

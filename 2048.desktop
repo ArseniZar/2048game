@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=2048
+Version=0.8.5
+Icon=/home/ars/Documents/Progect/2048/icon/2048_logo.png
+Exec=python3 /home/ars/Documents/Progect/2048/2048.py
+Terminal=false
+Type=Application
