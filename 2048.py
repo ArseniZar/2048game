@@ -343,6 +343,7 @@ def rad():
                     __exit = True
     
     fild = copy.deepcopy(fild_past)
+    
     return __exit
 # clear()
 # draw_plyt()
