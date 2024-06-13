@@ -332,6 +332,7 @@ def rad():
         
         
     fild_past = copy.deepcopy(fild)
+    
     Up.Up()
     if(fild_past.__eq__( fild)):
         Right.right()
@@ -343,8 +344,6 @@ def rad():
                     __exit = True
     
     fild = copy.deepcopy(fild_past)
-    
-    
     
     return __exit
 # clear()
