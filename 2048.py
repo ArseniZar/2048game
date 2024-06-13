@@ -318,6 +318,8 @@ def clear():
     pygame.display.update()
 
 def rad():
+    
+    
     global fild
     number = 0
     __exit =  False
