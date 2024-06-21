@@ -310,6 +310,7 @@ def draw_plyt():
     pygame.display.update()
 
 def clear():
+    
     screen.fill(bag_ground)
     radius = 6
     rect = pygame.Rect((WIGHT-WIGHT_SIZE)/2,
@@ -413,9 +414,9 @@ while True:
 
         for event in pygame.event.get():
             
-            
+            keys = pygame.key.get_pressed()
             if(flag):
-                keys = pygame.key.get_pressed()
+                
                 if keys[pygame.K_LEFT]and exits == False:
                     Left.left()
 
@@ -458,8 +459,25 @@ while True:
                     screen.blit(text, ((WIGHT-WIGHT_SIZE)/2+WIGHT_SIZE/4-100 , (HIGHT-HIGHT_SIZE)/2+HIGHT_SIZE/4+60))
                     pygame.display.update()
                     flag = False
+            
+            if keys[pygame.K_r] and pygame.key.get_mods() & pygame.K_LCTRL:
+                fild= [[Plyta(x, y) for x in range(4)] for y in range(4)]
+                saturation = 100
+                saturations()
+                clear()
+                draw_plyt()
+                last = ""
+                exits = False
+                flag = True
                 
                 
-            if event.type == pygame.QUIT :
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            elif keys[pygame.K_q] and pygame.key.get_mods() & pygame.K_LCTRL: 
+                pygame.quit()
+                exit()
+            
+            
+                
+               
