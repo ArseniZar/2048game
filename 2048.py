@@ -3,10 +3,10 @@ import random
 import copy
 HIGHT_SIZE = 500
 WIGHT_SIZE = 500
-HIGHT = 700
-WIGHT = 700
-SIZE_X = 4
-SIZE_Y = 4
+HIGHT = 1000
+WIGHT = 1000
+SIZE_X = 6
+SIZE_Y = 2
 pygame.init()
 window_size = (WIGHT, HIGHT)
 pygame.display.set_caption("2048")
@@ -288,7 +288,7 @@ def draw_plyt():
     probel = 20
     for y in range(len(fild)):
         for x in range(len(fild[y])):
-            pygame.draw.rect(screen, fild[y][x].getColor(), ((WIGHT-WIGHT_SIZE)/2+(0+5)+(WIGHT_SIZE/4+1)*x, (HIGHT-HIGHT_SIZE)/2+(0+5)+(HIGHT_SIZE/4+1)*y, (WIGHT_SIZE/4-13), (HIGHT_SIZE/4-13)),border_radius = 6)
+            pygame.draw.rect(screen, fild[y][x].getColor(), ((WIGHT-WIGHT_SIZE)/2+(0+5)+(WIGHT_SIZE/SIZE_X+1)*x, (HIGHT-HIGHT_SIZE)/2+(0+5)+(HIGHT_SIZE/SIZE_Y+1)*y, (WIGHT_SIZE/SIZE_X-13), (HIGHT_SIZE/SIZE_Y-13)),border_radius = 6)
             if(fild[y][x].getValut() != 0):
                 
                 __string = str(fild[y][x].getValut())
@@ -306,7 +306,7 @@ def draw_plyt():
                 __font = pygame.font.SysFont('Helvetica', font_size)
                 __text = __font.render(__string, True, fild[y][x].getColorNum())   
                         
-                screen.blit(__text, ((WIGHT-WIGHT_SIZE)/2+(WIGHT_SIZE/4-change)/2+(WIGHT_SIZE/4+1)* x, (HIGHT-HIGHT_SIZE)/2+(HIGHT_SIZE/4-40)/2+(HIGHT_SIZE/4+1)*y))
+                screen.blit(__text, ((WIGHT-WIGHT_SIZE)/2+(WIGHT_SIZE/SIZE_X-change)/2+(WIGHT_SIZE/SIZE_X+1)* x, (HIGHT-HIGHT_SIZE)/2+(HIGHT_SIZE/SIZE_Y-40)/2+(HIGHT_SIZE/SIZE_Y+1)*y))
     pygame.display.update()
 
 def clear():
@@ -396,7 +396,7 @@ def saturations():
 # Left.left()
 # Up.Up()
 # Down.Down()
-fild= [[Plyta(x, y) for x in range(4)] for y in range(4)]
+fild= [[Plyta(x, y) for x in range(SIZE_X)] for y in range(SIZE_Y)]
 for row in fild:
     print("[", end=' ')
     for plyta_obj in row:
@@ -417,36 +417,35 @@ while True:
             keys = pygame.key.get_pressed()
             if(flag):
                 
-                if keys[pygame.K_LEFT]and exits == False:
+                if( keys[pygame.K_LEFT] or keys[pygame.K_a] ) and exits == False:
                     Left.left()
-
-                    if (last != pygame.K_LEFT):
+                    if (last != keys):
                         exits = rad()
-                        last = pygame.K_LEFT
+                        last = keys
                     draw_plyt()
 
-                if keys[pygame.K_RIGHT] and exits == False:
+                if (keys[pygame.K_RIGHT] or keys[pygame.K_d] ) and exits == False:
                     Right.right()
 
-                    if (last != pygame.K_RIGHT):
+                    if (last != keys):
                         exits = rad()
-                        last = pygame.K_RIGHT
+                        last = keys
                     draw_plyt()
 
-                if keys[pygame.K_UP]and exits == False:
+                if (keys[pygame.K_UP] or keys[pygame.K_w] ) and exits == False:
                     Up.Up()
 
-                    if (last != pygame.K_UP):
+                    if (last != keys):
                         exits = rad()
-                        last = pygame.K_UP
+                        last = keys
                     draw_plyt()
 
-                if keys[pygame.K_DOWN]and exits == False:
+                if (keys[pygame.K_DOWN] or keys[pygame.K_s] ) and exits == False:
                     Down.Down()
 
-                    if (last != pygame.K_DOWN):
+                    if (last != keys):
                         exits = rad()
-                        last = pygame.K_DOWN
+                        last = keys
                     draw_plyt()
                     
                 if (exits and flag):
@@ -456,7 +455,7 @@ while True:
                     draw_plyt()
                     font = pygame.font.SysFont('Helvetica', 80, 1)
                     text = font.render("Game Over", True,game_over)                   
-                    screen.blit(text, ((WIGHT-WIGHT_SIZE)/2+WIGHT_SIZE/4-100 , (HIGHT-HIGHT_SIZE)/2+HIGHT_SIZE/4+60))
+                    screen.blit(text, ((WIGHT-WIGHT_SIZE)/2+WIGHT_SIZE/SIZE_X-100 , (HIGHT-HIGHT_SIZE)/2+HIGHT_SIZE/SIZE_Y+60))
                     pygame.display.update()
                     flag = False
             
@@ -468,7 +467,7 @@ while True:
                 draw_plyt()
                 last = ""
                 exits = False
-                flag = True
+                flag = True 
                 
                 
             if event.type == pygame.QUIT:
