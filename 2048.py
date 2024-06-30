@@ -1,16 +1,18 @@
 import pygame
 import random
 import copy
+from pynput.keyboard import Controller
 HIGHT_SIZE = 500
 WIGHT_SIZE = 500
-HIGHT = 1000
-WIGHT = 1000
-SIZE_X = 6
-SIZE_Y = 2
+HIGHT = 800
+WIGHT = 800
+SIZE_X = 4
+SIZE_Y = 4
 pygame.init()
 window_size = (WIGHT, HIGHT)
 pygame.display.set_caption("2048")
 screen = pygame.display.set_mode((WIGHT,HIGHT), pygame.RESIZABLE)
+keyboard = Controller()
 saturation = 100
 black = (0, 0, 0) 
 white = (255, 255, 255)
@@ -77,6 +79,7 @@ class Plyta:
         self.__valut = valut
         self.setColor()
         return self.__valut 
+    
     def __eq__(self, other):
         return self.__valut == other.getValut()
 
@@ -282,6 +285,9 @@ class Down:
             for plyta_obj in row:
                 print(plyta_obj.getValut(), end=' ')
             print("]")
+# def super(valut):
+#     if(valut == 2048 ):
+#         ;
 
 
 def draw_plyt():
@@ -364,7 +370,27 @@ def saturations():
     for y in range(len(fild)):
         for x in range(len(fild[y])):
             fild[y][x].setColor()
-            
+
+def restrart():
+    global fild 
+    global last
+    global exits
+    global flag 
+    fild = [[Plyta(x, y) for x in range(SIZE_X)] for y in range(SIZE_Y)]
+    # for row in fild:
+    #     print("[", end=' ')
+    #     for plyta_obj in row:
+    #         print(plyta_obj.getValut(), end=' ')
+    #     print("]")
+    # print()
+    clear()
+    draw_plyt()
+    last = ""
+    exits = False
+    flag = True
+
+
+
     # textRect = text.get_rect()
 # textRect.center = ((WIGHT/4)/2,(HIGHT/4)/2)
 # screen.blit(text, textRect)
@@ -396,25 +422,33 @@ def saturations():
 # Left.left()
 # Up.Up()
 # Down.Down()
-fild= [[Plyta(x, y) for x in range(SIZE_X)] for y in range(SIZE_Y)]
-for row in fild:
-    print("[", end=' ')
-    for plyta_obj in row:
-        print(plyta_obj.getValut(), end=' ')
-    print("]")
-print()
+
+restrart()
 
 
-clear()
-draw_plyt()
-last = ""
-exits = False
-flag = True
 while True:
 
         for event in pygame.event.get():
-            
+            # random.randrange(0, 4, 1)
+            # match random.randrange(1, 4, 1):
+            #     case 1:
+            #        keyboard.press('a')
+            #        keyboard.release('a')
+            #     case 2:
+            #         keyboard.press('w')
+            #         keyboard.release('w')
+            #     case 3:
+            #         keyboard.press('s')
+            #         keyboard.release('s')
+            #     case 4:
+            #         keyboard.press('d')
+            #         keyboard.release('d')
+                    
+                    
             keys = pygame.key.get_pressed()
+            
+                   
+                    
             if(flag):
                 
                 if( keys[pygame.K_LEFT] or keys[pygame.K_a] ) and exits == False:
@@ -454,20 +488,15 @@ while True:
                     clear()
                     draw_plyt()
                     font = pygame.font.SysFont('Helvetica', 80, 1)
-                    text = font.render("Game Over", True,game_over)                   
-                    screen.blit(text, ((WIGHT-WIGHT_SIZE)/2+WIGHT_SIZE/SIZE_X-100 , (HIGHT-HIGHT_SIZE)/2+HIGHT_SIZE/SIZE_Y+60))
+                    name = "Game Over"
+                    text = font.render(name, True,game_over)     
+                                  
+                    screen.blit(text, ((WIGHT-WIGHT_SIZE)/2+WIGHT_SIZE/2-len(name)/2*50 , (HIGHT-HIGHT_SIZE)/2+HIGHT_SIZE/2-40))
                     pygame.display.update()
                     flag = False
             
             if keys[pygame.K_r] and pygame.key.get_mods() & pygame.K_LCTRL:
-                fild= [[Plyta(x, y) for x in range(4)] for y in range(4)]
-                saturation = 100
-                saturations()
-                clear()
-                draw_plyt()
-                last = ""
-                exits = False
-                flag = True 
+                restrart()
                 
                 
             if event.type == pygame.QUIT:
