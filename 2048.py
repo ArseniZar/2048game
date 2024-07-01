@@ -1,25 +1,24 @@
 import pygame
 import random
 import copy
-from pynput.keyboard import Controller
 HIGHT_SIZE = 500
 WIGHT_SIZE = 500
-HIGHT = 800
-WIGHT = 800
+HIGHT = 700
+WIGHT = 700
 SIZE_X = 4
 SIZE_Y = 4
+
 pygame.init()
 window_size = (WIGHT, HIGHT)
 pygame.display.set_caption("2048")
 screen = pygame.display.set_mode((WIGHT,HIGHT), pygame.RESIZABLE)
-keyboard = Controller()
 saturation = 100
 black = (0, 0, 0) 
-white = (255, 255, 255)
+white = (255, 255, 255)                        
 gray = (192, 192, 192)
 crem = (250, 248, 239)
 gray_black = (128, 128, 128)
-game_over =(119, 110, 101)
+game_over = (119, 110, 101)
 ret = (187, 173, 160)
 color_number = gray_black
 bag_ground_play = ret
@@ -108,7 +107,7 @@ class Right:
     def __sumR(index_new_x, index_new_y, index_old_x, index_old_y):
         if (fild[index_new_y][index_new_x].getValut() != 0 and fild[index_old_y][index_old_x].getValut() == fild[index_new_y][index_new_x].getValut()):
             fild[index_old_y][index_old_x].setValut(fild[index_old_y][index_old_x].getValut() + fild[index_new_y][index_new_x].getValut())
-            fild[index_new_y][index_new_x].setValut( 0)
+            fild[index_new_y][index_new_x].setValut(0)
             Right.__sortR(index_new_y)
             return True
         elif (index_new_x != 0 and fild[index_new_y][index_new_x].getValut() != 0):
@@ -146,6 +145,7 @@ class Left:
             previous_index_x = x
             previous_index_y = y
             # print(fild[0], end=" ")
+
 
     def __swapL(index_new_x, index_new_y, index_old_x, index_old_y):
         if fild[index_old_y][index_old_x].getValut() == 0 and fild[index_new_y][index_new_x].getValut() != 0:
@@ -216,7 +216,7 @@ class Up:
         else:
             return False
 
-    def Up():
+    def up():
 
         for x in range(len(fild[0])):
             Up.__sortUp(x)
@@ -267,7 +267,7 @@ class Down:
                          index_old_x, index_old_y-1)
         else:
             return False
-    def Down():
+    def down():
 
         for x in range(len(fild[0])):
             Down.__sortDown(x)
@@ -286,7 +286,7 @@ class Down:
                 print(plyta_obj.getValut(), end=' ')
             print("]")
 # def super(valut):
-#     if(valut == 2048 ):
+#       if(valut == 2048 ):
 #         ;
 
 
@@ -342,13 +342,13 @@ def rad():
         
     fild_past = copy.deepcopy(fild)
     
-    Up.Up()
+    Up.up()
     if(fild_past.__eq__( fild)):
         Right.right()
         if(fild_past.__eq__( fild)):
             Left.left() 
             if(fild_past.__eq__( fild)):
-                Down.Down()  
+                Down.down()  
                 if(fild_past.__eq__( fild)):
                     __exit = True
     
@@ -366,10 +366,11 @@ def saturations():
     bag_ground = (250*saturation/100, 248*saturation/100, 239*saturation/100)
     bag_ground_play = (187*saturation/100, 173*saturation/100, 160*saturation/100)
     color_number = (128*saturation/100, 128*saturation/100, 128*saturation/100)
-    
+        
     for y in range(len(fild)):
         for x in range(len(fild[y])):
             fild[y][x].setColor()
+
 
 def restrart():
     global fild 
@@ -391,7 +392,7 @@ def restrart():
 
 
 
-    # textRect = text.get_rect()
+# textRect = text.get_rect()
 # textRect.center = ((WIGHT/4)/2,(HIGHT/4)/2)
 # screen.blit(text, textRect)
 # def animation(direction):
@@ -413,12 +414,12 @@ def restrart():
 #             for x in range(len(fild_past[y])-1 ,-1,-1):
 #                 if(fild_past[y][x].getValut() ==  0):
 #                     pygame.draw.rect(screen, fild[y][x].getColor(), ((WIGHT-WIGHT_SIZE)/2+(0+5)+(WIGHT_SIZE/4+1)*x, (HIGHT-HIGHT_SIZE)/2+(0+5)+(HIGHT_SIZE/4+1)*y, (WIGHT_SIZE/4-13), (HIGHT_SIZE/4-13)),border_radius = 6)
-    # for y in range(len(fild_past)):
+    #  for y in range(len(fild_past)):
     #     for x in range(len(fild_past[y])-1 ,-1,-1):
     #         if(fild_past[y][x].getValut() !=  0):
     #           
                    
-    # Right.right()
+# Right.right()
 # Left.left()
 # Up.Up()
 # Down.Down()
@@ -432,8 +433,8 @@ while True:
             # random.randrange(0, 4, 1)
             # match random.randrange(1, 4, 1):
             #     case 1:
-            #        keyboard.press('a')
-            #        keyboard.release('a')
+            #         keyboard.press('a')
+            #         keyboard.release('a')
             #     case 2:
             #         keyboard.press('w')
             #         keyboard.release('w')
@@ -467,7 +468,7 @@ while True:
                     draw_plyt()
 
                 if (keys[pygame.K_UP] or keys[pygame.K_w] ) and exits == False:
-                    Up.Up()
+                    Up.up()
 
                     if (last != keys):
                         exits = rad()
@@ -475,7 +476,7 @@ while True:
                     draw_plyt()
 
                 if (keys[pygame.K_DOWN] or keys[pygame.K_s] ) and exits == False:
-                    Down.Down()
+                    Down.down()
 
                     if (last != keys):
                         exits = rad()
@@ -497,7 +498,7 @@ while True:
             
             if keys[pygame.K_r] and pygame.key.get_mods() & pygame.K_LCTRL:
                 restrart()
-                
+            
                 
             if event.type == pygame.QUIT:
                 pygame.quit()
